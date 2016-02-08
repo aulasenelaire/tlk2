@@ -1,0 +1,24 @@
+{
+  "name": "TLK 2",
+  "description": "Dar baremos basados en tlk",
+  "version": "1.0",
+  "permissions": [
+    "<all_urls>",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["vendor/moment.js", "vendor/jquery.js", "content/index.js"]
+    }
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": ["background/index.js"]
+  },
+  "browser_action": {
+    "default_title": "Simple page action",
+    "default_popup": "popup/index.html"
+  },
+  "manifest_version": 2
+}
