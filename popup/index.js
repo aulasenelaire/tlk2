@@ -35,16 +35,16 @@ $.getJSON(chrome.extension.getURL('/data/tlk.json'), function(tlk) {
 var tlkSessionTypes = {
   'TLK 2' : {
     silaba_types: {
-      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
+      mono: ["ACT 1", "ACT 2", "ACT 3", "ACT4"],
       bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
     },
     tlk_key: 'TLK_OLD'
   },
   'TLK 2-6' : {
     silaba_types: {
-      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N"],
-      bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
-      tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
+      mono: ["ACT 1", "ACT 2", "ACT 3"],
+      bi: ["ACT4", "ACT 5", "ACT 6", "ACT 7", "ACT 8", "ACT 9"],
+      tri: ["ACT 10", "ACT 11", "ACT 12"],
     },
     tlk_key: 'TLK_OLD'
   },
