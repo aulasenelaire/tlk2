@@ -1,35 +1,21 @@
 var TLK;
 var TLK_OLD;
 var pageInfo;
+var processedData;
 var baseURL = 'http://app.binding-edu.org/api';
 var sessionApi = 'sessions?count=10000&offset=0&search=tlk&student=';
 var activitiesApi = 'activities';
 
-var first = moment().set({M: 0, date: 1});
-var today = moment();
-var isAfterXmas = today.isSameOrAfter(first);
+// Context scope variable. In template access with context.foo
+_.templateSettings.variable = "context";
+var sessionsTemplate = _.template(
+  $('script.sessions').html()
+);
 
-
-var tlkSessionTypes = {
-  'TLK 2' : {
-    mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
-    bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
-  },
-  'TLK-2-N' : {
-    mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
-    bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
-  },
-  'TLK 2-6' : {
-    mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N"],
-    bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
-    tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
-  },
-  'TLK 2-6_N' : {
-    mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N"],
-    bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
-    tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
-  },
-};
+var coursesNames = [
+  '1P', '2P', '3P', '4P', '5P', '6P',
+  '1ESO', '2ESO', '3ESO', '4ESO',
+];
 
 // Read TLK OLD
 $.getJSON(chrome.extension.getURL('/data/tlk_old.json'), function(tlk) {
@@ -40,6 +26,39 @@ $.getJSON(chrome.extension.getURL('/data/tlk_old.json'), function(tlk) {
 $.getJSON(chrome.extension.getURL('/data/tlk.json'), function(tlk) {
   TLK = tlk;
 });
+
+var tlkSessionTypes = {
+  'TLK 2' : {
+    silaba_types: {
+      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
+      bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
+    },
+    baremo: TLK_OLD,
+  },
+  'TLK-2-N' : {
+    silaba_types: {
+      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
+      bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
+    },
+    baremo: TLK,
+  },
+  'TLK 2-6' : {
+    silaba_types: {
+      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N"],
+      bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
+      tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
+    },
+    baremo: TLK_OLD,
+  },
+  'TLK 2-6_N' : {
+    silaba_types: {
+      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N"],
+      bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
+      tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
+    },
+    baremo: TLK,
+  },
+};
 
 // Request info to page with chrome.extension API message
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -162,65 +181,89 @@ function fetchData(token, url, callback) {
 }
 
 /**
- * Get Older and newer session years
+ * Split year in trimesters
  *
- * @param {Array} sessions
+ * @return {Moment} session_creation
+ * @return {String}
+ */
+function getTrimester(session_creation) {
+  var currentYear = session_creation.year();
+  var prevYear = currentYear - 1;
+  var nextYear = currentYear + 1;
+  var startYear = moment().set({date: 1, M: 0, date: 1, year: currentYear, hour: 00, minute: 00, second: 00});
+  var middleYear = moment().set({date: 30, M: 7, date: 1, year: currentYear, hour: 23, minute: 59, second: 59});
+  var isFirstPartOfYear = session_creation.isBetween(startYear, middleYear);
+
+  var firstPart = isFirstPartOfYear ? prevYear : currentYear;
+  var secondPart = isFirstPartOfYear ? currentYear : nextYear;
+
+  var trimesters = [
+    {
+      name: '1tr',
+      start: moment().set({date: 1, M: 8, year: firstPart, hour: 00, minute: 00, second: 00}),
+      end: moment().set({date: 25, M: 11, year: firstPart, hour: 23, minute: 59, second: 59})
+    },
+    {
+      name: '2tr',
+      start: moment().set({date: 26, M: 11, year: firstPart, hour: 00, minute: 00, second: 00}),
+      end: moment().set({date: 1, M: 2, year: secondPart, hour: 23, minute: 59, second: 59})
+    },
+    {
+      name: '3tr',
+      start: moment().set({date: 2, M: 2, year: secondPart, hour: 00, minute: 00, second: 00}),
+      end: moment().set({date: 30, M: 7, year: secondPart, hour: 23, minute: 59, second: 59}),
+    }
+  ];
+
+  var trimester = _.find(trimesters, function(trimester) {
+    return session_creation.isBetween(trimester.start, trimester.end)
+  });
+
+  return trimester.name;
+}
+
+/**
+ * Process data from server. Adding trimester information
+ * to each session
+ *
+ * @return {Objec} data
  * @return {Object}
  */
-function getMaxMinSessionYear() {
-  var sessionYears = _.uniq(_.map(sessions, function(session) {
-    return moment(session.creation_time).year();
-  }));
+function processData(data) {
+  var activitiesBySessionID = _.groupBy(data.activities, 'session');
+  var sessionsWithTrimester = _.map(data.valid_sessions, function(session) {
+    var creationTime = moment(session.creation_time);
+
+    session.creationTime = creationTime;
+    session.trimester = getTrimester(creationTime);
+    return session;
+  });
+
+  var sessionsOrdered = _.sortBy(sessionsWithTrimester, function(session) {
+    return session.creationTime.unix();
+  });
 
   return {
-    minYear: _.min(sessionYears),
-    maxYear: _.max(sessionYears),
+    sessions: sessionsOrdered,
+    activitiesBySessionID: activitiesBySessionID
   };
 }
 
-var initialCourseYear = isAfterXmas ? (today.year() - 1) : today.year();
-var endCourseYear = !isAfterXmas ? (today.year() + 1) : today.year();
-
-var trimesters = {
-  '1t': {
-    start: moment().set({date: 1, M: 8, year: initialCourseYear}),
-    end: moment().set({date: 25, M: 11, year: initialCourseYear}),
-  },
-  '2t': {
-    start: moment().set({date: 26, M: 11, year: initialCourseYear}),
-    end: moment().set({date: 1, M: 2, year: endCourseYear}),
-  },
-  '3t': {
-    start: moment().set({date: 2, M: 2, year: endCourseYear}),
-    end: moment().set({date: 31, M: 6, year: endCourseYear}),
-  },
-};
-
 $('.js-calculate').click(function () {
+  $(this).text('calculando...');
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var currentTab = tabs[0];
+
     fetchData(pageInfo.token, currentTab.url, function (data) {
+      processedData = processData(data);
 
-      var activitiesBySessionID = _.groupBy(data.activities, 'session');
-      var analizedData = _.reduce(data.valid_sessions, function(memo, session) {
-        debugger;
-        var publishDate = moment(session.publish_date, 'YYYY-MM-DD');
-        sessionSemester = _.filter(trimesters, function(trimester) {
-          return publishDate.isBetween(trimester.start, trimester.end)
-        });
-        console.log('foo', activitiesBySessionID)
-        return memo;
-      }, {});
+      $('.js-user-input').html(
+        sessionsTemplate({
+          sessions: processedData.sessions,
+          courses: coursesNames
+        })
+      );
 
-      if (data.invalid_sessions.length) {
-        var invalidSessions  = [$('<div/>').text('Sessions Invalid:' + data.invalid_sessions.length)];
-        _.each(data.invalid_sessions, function(session) {
-          invalidSessions.push($('<div/>').text(
-            session.name + ': ' + session.id
-          ));
-        });
-        $('.js-result').html(invalidSessions);
-      }
     });
   });
 });
