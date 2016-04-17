@@ -1,3 +1,4 @@
+var TLK_LIST = {};
 var TLK;
 var TLK_OLD;
 var pageInfo;
@@ -12,6 +13,10 @@ var sessionsTemplate = _.template(
   $('script.sessions').html()
 );
 
+var percentilsTemplate = _.template(
+  $('script.percentils').html()
+);
+
 var coursesNames = [
   '1P', '2P', '3P', '4P', '5P', '6P',
   '1ESO', '2ESO', '3ESO', '4ESO',
@@ -19,12 +24,12 @@ var coursesNames = [
 
 // Read TLK OLD
 $.getJSON(chrome.extension.getURL('/data/tlk_old.json'), function(tlk) {
-  TLK_OLD= tlk;
+  TLK_LIST['TLK_OLD'] = tlk;
 });
 
 // Read TLK
 $.getJSON(chrome.extension.getURL('/data/tlk.json'), function(tlk) {
-  TLK = tlk;
+  TLK_LIST['TLK'] = tlk;
 });
 
 var tlkSessionTypes = {
@@ -33,14 +38,7 @@ var tlkSessionTypes = {
       mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
       bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
     },
-    baremo: TLK_OLD,
-  },
-  'TLK-2-N' : {
-    silaba_types: {
-      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
-      bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
-    },
-    baremo: TLK,
+    tlk_key: 'TLK_OLD'
   },
   'TLK 2-6' : {
     silaba_types: {
@@ -48,7 +46,14 @@ var tlkSessionTypes = {
       bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
       tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
     },
-    baremo: TLK_OLD,
+    tlk_key: 'TLK_OLD'
+  },
+  'TLK-2-N' : {
+    silaba_types: {
+      mono: ["ACT 1_N", "ACT 2_N", "ACT 3_N", "ACT4_N"],
+      bi: ["ACT 5_N", "ACT 6_N", "ACT 7_N"],
+    },
+    tlk_key: 'TLK'
   },
   'TLK 2-6_N' : {
     silaba_types: {
@@ -56,7 +61,7 @@ var tlkSessionTypes = {
       bi: ["ACT4_N", "ACT 5_N", "ACT 6_N", "ACT 7_N", "ACT 8_N", "ACT 9_N"],
       tri: ["ACT 10_N", "ACT 11_N", "ACT 12_N"],
     },
-    baremo: TLK,
+    tlk_key: 'TLK'
   },
 };
 
@@ -181,6 +186,135 @@ function fetchData(token, url, callback) {
 }
 
 /**
+ * Get course with session ID from user input
+ *
+ * @return {Array}
+ */
+function getCourses() {
+  var sessionsHtml = $('.js-sessions-with-courses li');
+  var selectedCoursesOptions = sessionsHtml.find('.js-select').find(':selected');
+
+  return _.map(selectedCoursesOptions, function(option) {
+    var value = $(option).val();
+    var match = value.match(/(\d+):(\w+)/);
+    return {
+      sessionId: match[1],
+      course: match[2]
+    };
+  });
+}
+
+/**
+ * Add courses to sessions
+ *
+ * @param {Array} courses
+ */
+function addCoursesToSessions(courses) {
+  _.each(courses, function(courseInfo) {
+    processedData.sessionsByID[courseInfo.sessionId].course = courseInfo.course;
+  });
+}
+
+/**
+ * Get media of an array of numbers
+ *
+ * @param {Array} values
+ * @return {Number}
+ */
+function getMedia(values) {
+  var count = values.length;
+  var sum = _.reduce(values, function(memo, num){
+    return memo + (+num);
+  }, 0);
+  return sum / count;
+}
+
+/**
+ * Get percentil for that tlk session and activities media
+ *
+ * @param {Object} tlk
+ * @param {Number} media
+ * @return {Object}
+ */
+function getPercentil(tlk, media) {
+  // remove keys that are not percentils like course, trimester,...
+  var validTlkValues = _.reduce(tlk, function(memo, value, key) {
+    if (/^p\d+$/.test(key)) {
+      var num = value.replace(',', '.');
+      memo[key] = parseFloat(num);
+    }
+    return memo
+  }, {});
+
+  var prevValue = {};
+  var winner_percentil = {};
+  var percentil = _.find(validTlkValues, function(value, key) {
+    if (prevValue && (prevValue.value <= media && media < value)) {
+      winner_percentil = {
+        key: prevValue.key,
+        value: prevValue.value
+      };
+
+      return true;
+    }
+
+    prevValue = {
+      key: key,
+      value: value
+    };
+  });
+
+  return winner_percentil;
+}
+
+/**
+ * Generate percentils taking into account specific TLK
+ * Based on session name it can be TLK or TLK_OLD baremos
+ *
+ * @return {Array}
+ */
+function generatePercentils() {
+  return _.map(_.values(processedData.sessionsByID), function (session) {
+    var sessionMeta = tlkSessionTypes[session.name];
+    var tlk = TLK_LIST[sessionMeta.tlk_key];
+    var tlkValidSessions = _.filter(tlk, function (row) {
+      return row.trimester === session.trimester && row.course === session.course;
+    });
+    var tlkBySilabaType = _.groupBy(tlkValidSessions, 'length');
+    var activities = _.map(processedData.activitiesBySessionID[session.id]);
+    var activitiesBySilabaType = _.groupBy(activities, function(activity) {
+      var silabas = sessionMeta.silaba_types;
+      return _.find(_.keys(silabas), function(key) {
+        return _.contains(silabas[key], activity.name);
+      });
+    });
+
+    // TODO: Could be activities with NOT standard names
+    // Those are grouped under undefined key
+    if (activitiesBySilabaType.undefined) {
+      delete activitiesBySilabaType.undefined;
+    }
+
+    var percentils = _.reduce(_.keys(activitiesBySilabaType), function(memo, type) {
+      var activities = activitiesBySilabaType[type];
+      var activities_words_minute = _.pluck(activities, 'words_minute');
+      var media = getMedia(activities_words_minute);
+      var tlk_activities = tlkBySilabaType[type][0];
+
+      memo[type] = {
+        activities_media: media,
+        tlk_percentil: getPercentil(tlk_activities, media)
+      }
+
+      return memo;
+    }, {});
+
+    session.percentils = percentils;
+    return session;
+  });
+}
+
+/**
  * Split year in trimesters
  *
  * @return {Moment} session_creation
@@ -233,9 +367,9 @@ function processData(data) {
   var activitiesBySessionID = _.groupBy(data.activities, 'session');
   var sessionsWithTrimester = _.map(data.valid_sessions, function(session) {
     var creationTime = moment(session.creation_time);
-
     session.creationTime = creationTime;
     session.trimester = getTrimester(creationTime);
+
     return session;
   });
 
@@ -243,8 +377,10 @@ function processData(data) {
     return session.creationTime.unix();
   });
 
+  var sessionsByID = _.indexBy(sessionsOrdered, 'id');
+
   return {
-    sessions: sessionsOrdered,
+    sessionsByID: sessionsByID,
     activitiesBySessionID: activitiesBySessionID
   };
 }
@@ -254,19 +390,38 @@ $('.js-calculate').click(function () {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var currentTab = tabs[0];
 
+    // Get sessions and activities from API
     fetchData(pageInfo.token, currentTab.url, function (data) {
       processedData = processData(data);
 
+      // We do not have course info on session.
+      // We need to ask user to select course for each session
       $('.js-user-input').html(
         sessionsTemplate({
-          sessions: processedData.sessions,
+          sessions: _.values(processedData.sessionsByID),
           courses: coursesNames
         })
       );
 
+      $('.js-calculate-with-course').on('click', function () {
+        var courses = getCourses();
+        var notSelectedCourse = _.any(courses, function (o) {return o.course === 'no';});
+
+        if (notSelectedCourse) {
+          $('.js-error').text('Debes seleccionar un curso para cada session');
+        } else {
+          addCoursesToSessions(courses);
+          var sessionsWithPercentils = generatePercentils();
+
+          $('.js-user-input').html(
+            percentilsTemplate({
+              sessions: sessionsWithPercentils,
+            })
+          );
+        }
+      });
+
     });
   });
 });
-
-
 

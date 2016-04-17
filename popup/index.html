@@ -3,25 +3,46 @@
   <head>
     <meta charSet="utf-8" />
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <style>
+      table {
+        text-align: left;
+        border: 1px solid #e0e0e0;
+        margin: 0 0 20px 0;
+        border-collapse: collapse;
+      }
+     table caption {
+       text-align: left;
+       padding: 0 0 10px 0;
+     }
+     table td,
+     table th {
+       padding: 10px;
+     }
+
+    tbody tr:nth-child(odd) td {
+      background-color: #f7f7f7;
+    }
+    </style>
   </head>
   <body>
     <div>
       <div class='js-user-input'>
         <button class="js-calculate">Calcular</button>
       </div>
-      <div class="js-result"></div>
     </div>
 
+
     <script type="text/template" class="sessions">
+      <div class="js-error" style="marging: 0 0 20px 0;color: red;text-align: center;"></div>
       <ul class="js-sessions-with-courses" style="list-style: none;padding: 0;margin: 0 0 20px 0;width: 500px;">
         <% _.each(context.sessions, function(session) { %>
-          <li data-id="<%- session.id %>" style="clear:both;margin: 0 0 10px 0;">
+          <li style="clear:both;margin: 0 0 10px 0;">
             <div style="float: right;">
               <small><%- session.creationTime.format('YYYY-MM-DD') %></small>
-              <select >
-                <option value="no">Elige curso</option>
+              <select class="js-select">
+                <option value="<%- session.id %>:no">Elige curso</option>
                 <% _.each(context.courses, function(course) { %>
-                  <option value="<%- course %>"><%- course %></option>
+                  <option value="<%- session.id %>:<%- course %>"><%- course %></option>
                 <% }); %>
               </select>
             </div>
@@ -30,6 +51,39 @@
         <% }); %>
       </ul>
       <button class="js-calculate-with-course">Calcular</button>
+    </script>
+
+    <script type="text/template" class="percentils">
+      <% _.each(context.sessions, function(session) { %>
+        <table style="width: 500px;">
+          <caption>
+            <strong><%- session.name %></strong>&nbsp;
+            / <small><strong>ID:</strong> <%- session.id %></small>
+            / <small><strong>Creada:</strong> <%- session.creationTime.format('YYYY-MM-DD') %></small>
+            / <small><strong>Curso:</strong> <%- session.course %></small>
+            / <small><strong>Trimestre:</strong> <%- session.trimester %></small>
+          </caption>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Palabra por minuto (media)</th>
+              <th>Percentil</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% _.each(session.percentils, function(percentil, key) { %>
+              <tr>
+                <td><%- key %></td>
+                <td><%- parseFloat(percentil.activities_media).toFixed(2) %></td>
+                <td>
+                  <%- percentil.tlk_percentil.key %>&nbsp;
+                  (<%- percentil.tlk_percentil.value %>)
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% }); %>
     </script>
     <script src="../vendor/jquery.js"></script>
     <script src="../vendor/underscore.js"></script>
