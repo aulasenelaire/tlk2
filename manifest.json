@@ -1,25 +1,20 @@
 {
-  "name": "TLK 2",
-  "description": "Dar baremos basados en tlk",
-  "version": "1.0",
-  "permissions": [
-    "<all_urls>",
-    "tabs"
-  ],
+  "manifest_version": 2,
+  "name": "TLK2_Redux",
+  "description": "React, Chrome, and Redux example",
+  "version": "0.0.1",
+  "background": {
+    "scripts": [
+      "event.js"
+    ],
+    "persistent": true
+  },
+  "content_security_policy":"script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["vendor/moment.js", "vendor/jquery.js", "content/index.js"]
+      "matches": ["*://*/*"],
+      "css": [],
+      "js": ["content.js"]
     }
-  ],
-  "content_security_policy":"script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "background": {
-    "persistent": true,
-    "scripts": ["background/index.js"]
-  },
-  "browser_action": {
-    "default_title": "Simple page action",
-    "default_popup": "popup/index.html"
-  },
-  "manifest_version": 2
+  ]
 }
