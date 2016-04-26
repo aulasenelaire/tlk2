@@ -12,7 +12,10 @@ gulp.task('event-js', ['clean'], (cb) => {
   webpack(eventWebpackConfig, (err, stats) => {
     if(err) throw new plugins.util.PluginError('webpack', err);
 
-    plugins.util.log('[webpack]', stats.toString());
+    plugins.util.log('[webpack]', stats.toString({
+      chunks: false,
+      source: false,
+    }));
 
     cb();
   });
@@ -22,7 +25,10 @@ gulp.task('content-js', ['clean'], (cb) => {
   webpack(contentWebpackConfig, (err, stats) => {
     if(err) throw new plugins.util.PluginError('webpack', err);
 
-    plugins.util.log('[webpack]', stats.toString());
+    plugins.util.log('[webpack]', stats.toString({
+      chunks: false,
+      source: false,
+    }));
 
     cb();
   });

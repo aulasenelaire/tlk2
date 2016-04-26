@@ -1,7 +1,24 @@
 const path = require('path');
 
-module.exports = {
+/**
+ * Based on enviroment put CSS inside webpack bundle
+ * or extract into a css file
+ *
+ * @param {String} env
+ * @return {String}
+ */
+function getCSSLoader(env) {
+  var cssLocalIdentName = env === 'development' ?
+        '[name]__[local]___[hash:base64:5]' : '[hash:base64:5]';
 
+  var styleLoader = 'style';
+  var otherLoaders = 'css?modules&importLoaders=1&localIdentName=' + cssLocalIdentName + '!postcss';
+
+  return styleLoader + '!' + otherLoaders;
+}
+
+module.exports = {
+  devtool: 'eval-source-map',
   entry: [
     './content/src/index.js'
   ],
@@ -13,10 +30,9 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx', '.scss', '.json'],
+    extensions: ['', '.js', '.jsx', '.scss', '.json', '.css'],
     modulesDirectories: ['node_modules']
   },
-  devtool: 'eval-source-map',
 
   module: {
     loaders: [
@@ -28,7 +44,18 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: getCSSLoader('development')
+      },
     ]
-  }
+  },
+
+  postcss: [
+    require('postcss-import')(),
+    require('postcss-cssnext')(),
+    require('postcss-nested'),
+    require('autoprefixer-core'),
+  ],
 };

@@ -12,7 +12,7 @@
   "content_security_policy":"script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["*://app.binding-edu.org/dashboard/student/*"],
       "css": [],
       "js": ["content.js"]
     }
