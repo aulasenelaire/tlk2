@@ -1,11 +1,45 @@
+/**
+ * App main wrapper
+ *
+ * .isOpen - Open state of app
+ *
+ */
 .app {
   position: fixed;
   top: 0;
-  bottom: 0;
   right: 0;
-  width: 500px;
+  width: 150px;
   z-index: 10000;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.3);
   padding: 20px;
+  h1 {
+    margin: 0;
+    font-size: 10px;
+  }
+
+  &.isOpen {
+    h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .triangle {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    background: transparent;
+    border-style: solid;
+    border-width: 20px 0 0 20px;
+    border-color: transparent transparent transparent #444;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
