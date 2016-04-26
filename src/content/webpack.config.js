@@ -20,16 +20,19 @@ function getCSSLoader(env) {
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
-    './content/src/index.js'
+    './src/content/src/index.js'
   ],
 
   output: {
     filename: 'content.js',
-    path: path.join(__dirname, '../', 'build'),
+    path: path.join(__dirname, '../../', 'build'),
     publicPath: '/'
   },
 
   resolve: {
+    root: [
+      path.resolve('../src/'),
+    ],
     extensions: ['', '.js', '.jsx', '.scss', '.json', '.css'],
     modulesDirectories: ['node_modules']
   },

@@ -7,6 +7,14 @@ const COLLAPSED_WIDTH = 150;
 const EXPANDED_WIDTH = 500;
 const COLLAPSED_HEIGHT = 'auto';
 const EXPANDED_HEIGHT = '100%';
+const COLLAPSED_STYLES = {
+  width: COLLAPSED_WIDTH,
+  height: COLLAPSED_HEIGHT,
+};
+const EXPANDED_STYLES = {
+  width: EXPANDED_WIDTH,
+  height: EXPANDED_HEIGHT,
+};
 
 /**
  * Get class names
@@ -32,26 +40,14 @@ function getClasses(isOpen) {
 function getStyles(isOpen) {
   if (isOpen) {
     return {
-      before: {
-        width: COLLAPSED_WIDTH,
-        height: COLLAPSED_HEIGHT,
-      },
-      after: {
-        width: EXPANDED_WIDTH,
-        height: EXPANDED_HEIGHT,
-      }
+      before: COLLAPSED_STYLES,
+      after: EXPANDED_STYLES,
     };
   }
 
   return {
-    before: {
-      width: EXPANDED_WIDTH,
-      height: EXPANDED_HEIGHT,
-    },
-    after: {
-      width: COLLAPSED_WIDTH,
-      height: COLLAPSED_HEIGHT,
-    }
+    before: EXPANDED_STYLES,
+    after: COLLAPSED_STYLES,
   };
 }
 
@@ -63,6 +59,13 @@ class App extends Component {
     };
 
     this.onClickExpand = this.onClickExpand.bind(this);
+  }
+  componentDidMount() {
+    document.addEventListener('click', () => {
+      this.props.dispatch({
+        type: 'ADD_COUNT'
+      });
+    });
   }
 
   componentDidUpdate() {
@@ -88,9 +91,11 @@ class App extends Component {
   render() {
     const { isOpen } = this.state;
 
+    console.log('count', this.props.count);
     return (
       <div ref='app' className={getClasses(isOpen)}>
         <h1>Resultados TLK</h1>
+        Count: {this.props.count}
         <button onClick={this.onClickExpand} className={styles.triangle} />
       </div>
     );

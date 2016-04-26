@@ -1,19 +1,21 @@
 const path = require('path');
 
 module.exports = {
-
+  devtool: 'eval-source-map',
   entry: [
-    './event/src/index.js'
+    './src/event/src/index.js'
   ],
 
   output: {
     filename: 'event.js',
-    path: path.join(__dirname, '../', 'build')
+    path: path.join(__dirname, '../../', 'build')
   },
 
-  devtool: 'eval-source-map',
 
   resolve: {
+    root: [
+      path.resolve('../src/'),
+    ],
     extensions: ['', '.js', '.json'],
     modulesDirectories: ['node_modules']
   },

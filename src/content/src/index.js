@@ -3,9 +3,7 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {Store} from 'react-chrome-redux';
 
-import { CHROME_PORT } from './constants';
-
-// const CHROME_PORT = 'tlk2';
+// import { CHROME_PORT } from './constants';
 
 import App from './components/app/App';
 
@@ -26,8 +24,6 @@ const ANCHOR_ID = 'tlk2';
 anchor.id = ANCHOR_ID;
 
 document.body.insertBefore(anchor, document.body.childNodes[0]);
-
-console.log('proxyStore', proxyStore);
 
 render(
   <Provider store={proxyStore}>

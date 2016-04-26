@@ -5,8 +5,8 @@ import rimraf from 'rimraf';
 
 const plugins = loadPlugins();
 
-import eventWebpackConfig from './event/webpack.config';
-import contentWebpackConfig from './content/webpack.config';
+import eventWebpackConfig from './src/event/webpack.config';
+import contentWebpackConfig from './src/content/webpack.config';
 
 gulp.task('event-js', ['clean'], (cb) => {
   webpack(eventWebpackConfig, (err, stats) => {
