@@ -8,13 +8,16 @@
   },
   "author": "Andres Gutierrez",
   "dependencies": {
+    "jquery": "^2.2.3",
+    "moment": "^2.13.0",
     "react": "^0.14.3",
     "react-chrome-redux": "0.0.7",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
     "redux-localstorage": "1.0.0-rc4",
-    "redux-localstorage-filter": "^0.1.1"
+    "redux-localstorage-filter": "^0.1.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "autoprefixer-core": "^5.1.11",
