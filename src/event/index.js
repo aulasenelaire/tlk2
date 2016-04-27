@@ -2,9 +2,10 @@ import {createStore} from 'redux';
 import rootReducer from './reducers';
 
 import {wrapStore} from 'react-chrome-redux';
+import CONSTANTS from '../constants';
 
 const store = createStore(rootReducer, {});
 
 wrapStore(store, {
-  portName: 'tlk2',
+  portName: CONSTANTS.CHROME_PORT,
 });
