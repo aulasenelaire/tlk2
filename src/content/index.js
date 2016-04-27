@@ -1,9 +1,11 @@
 import React from 'react';
-import {render} from 'react-dom';
-import {Provider} from 'react-redux';
-import {Store} from 'react-chrome-redux';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { Store } from 'react-chrome-redux';
 
 import CONSTANTS from '../constants';
+import TLK_OLD from '../data/tlk_old.json';
+import TLK from '../data/tlk.json';
 
 import App from './components/app/App';
 
@@ -16,6 +18,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
   }
 });
+
+debugger;
+console.log('TLK', TLK);
 
 const proxyStore = new Store({portName: CONSTANTS.CHROME_PORT});
 

@@ -9,6 +9,7 @@
   "author": "Andres Gutierrez",
   "dependencies": {
     "jquery": "^2.2.3",
+    "json-loader": "^0.5.4",
     "moment": "^2.13.0",
     "react": "^0.14.3",
     "react-chrome-redux": "0.0.7",

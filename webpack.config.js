@@ -53,6 +53,7 @@ module.exports = {
         test: /\.css$/,
         loader: getCSSLoader('development')
       },
+      { test: /\.json$/, loader: 'json' },
     ]
   },
 
