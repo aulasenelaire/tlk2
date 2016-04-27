@@ -91,7 +91,6 @@ class App extends Component {
   render() {
     const { isOpen } = this.state;
 
-    console.log('count', this.props.count);
     return (
       <div ref='app' className={getClasses(isOpen)}>
         <h1>Resultados TLK</h1>

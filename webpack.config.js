@@ -32,7 +32,7 @@ module.exports = {
 
   resolve: {
     root: [
-      path.resolve('../src/'),
+      path.resolve('./src/'),
     ],
     extensions: ['', '.js', '.jsx', '.scss', '.json', '.css'],
     modulesDirectories: ['node_modules']
