@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import count from './count';
+import sessionsReducer from './sessions/';
 
 export default combineReducers({
-  count
+  sessionsReducer
 });

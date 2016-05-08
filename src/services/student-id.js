@@ -9,5 +9,9 @@ export default function getStudentId(url = '') {
 
   if (!urlMatch || !urlMatch[1]) return null;
 
-  return urlMatch[1];
+  const id = urlMatch[1];
+
+  if (!id) return null;
+
+  return +id;
 }

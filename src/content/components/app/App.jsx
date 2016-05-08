@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import _ from 'underscore';
-import {connect} from 'react-redux';
 
-import getStudentId from 'services/student-id';
 import styles from './styles/';
+import Tlk from '../Tlk';
 
 /**
  * Get class names
@@ -54,9 +53,8 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener('urlChangeEvent', (event) => {
       const { studentId } = event.detail;
-      const id = _.isUndefined(studentId) ? null : +studentId;
 
-      this.setState({ isOpen: false, studentId: id});
+      this.setState({ isOpen: false, studentId});
     }, false);
   }
 
@@ -86,23 +84,19 @@ class App extends Component {
         onClick: this.onClickExpand,
       });
     }
+
     return (
       <div {...attrs}>
-        {isOpen && <h1>TLK</h1>}
-        {!isOpen && <div className={styles.info}>TLK / studentId: {studentId}</div>}
-
         <button onClick={this.onClickExpand} className={styles.triangle}>
           {isOpen && <span>x</span>}
         </button>
+
+        {!isOpen && <div className={styles.info}>studentId: {studentId}</div>}
+
+        <Tlk studentId={studentId} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    count: state.count
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
