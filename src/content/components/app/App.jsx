@@ -1,20 +1,9 @@
 import React, {Component} from 'react';
+import _ from 'underscore';
 import {connect} from 'react-redux';
 
+import getStudentId from 'services/student-id';
 import styles from './styles/';
-
-const COLLAPSED_WIDTH = 150;
-const EXPANDED_WIDTH = 500;
-const COLLAPSED_HEIGHT = 'auto';
-const EXPANDED_HEIGHT = '100%';
-const COLLAPSED_STYLES = {
-  width: COLLAPSED_WIDTH,
-  height: COLLAPSED_HEIGHT,
-};
-const EXPANDED_STYLES = {
-  width: EXPANDED_WIDTH,
-  height: EXPANDED_HEIGHT,
-};
 
 /**
  * Get class names
@@ -40,14 +29,14 @@ function getClasses(isOpen) {
 function getStyles(isOpen) {
   if (isOpen) {
     return {
-      before: COLLAPSED_STYLES,
-      after: EXPANDED_STYLES,
+      width: 500,
+      bottom: 4,
     };
   }
 
   return {
-    before: EXPANDED_STYLES,
-    after: COLLAPSED_STYLES,
+    width: 180,
+    bottom: 'auto',
   };
 }
 
@@ -56,30 +45,23 @@ class App extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      studentId: props.studentId,
     };
 
     this.onClickExpand = this.onClickExpand.bind(this);
   }
+
   componentDidMount() {
-    document.addEventListener('click', () => {
-      this.props.dispatch({
-        type: 'ADD_COUNT'
-      });
-    });
+    window.addEventListener('urlChangeEvent', (event) => {
+      const { studentId } = event.detail;
+      const id = _.isUndefined(studentId) ? null : +studentId;
+
+      this.setState({ isOpen: false, studentId: id});
+    }, false);
   }
 
-  componentDidUpdate() {
-    const { isOpen } = this.state;
-    const domNode = this.refs.app;
-    const inlineStyles = getStyles(isOpen);
-
-    domNode.style.width = `${inlineStyles.before.width}px`;
-    domNode.style.height = inlineStyles.before.height;
-    window.requestAnimationFrame(function() {
-      domNode.style.transition = 'width 250ms';
-      domNode.style.width = `${inlineStyles.after.width}px`;
-      domNode.style.height = inlineStyles.after.height;
-    });
+  componentWillUnmount() {
+    window.removeEventListener('urlChangeEvent');
   }
 
   onClickExpand() {
@@ -89,13 +71,29 @@ class App extends Component {
   }
 
   render() {
-    const { isOpen } = this.state;
+    const { isOpen, studentId } = this.state;
 
+    if (!studentId) return null;
+
+    let attrs = {
+      ref: 'app',
+      className: getClasses(isOpen),
+      style: getStyles(isOpen),
+    };
+
+    if (!isOpen) {
+      attrs = _.extend(attrs, {
+        onClick: this.onClickExpand,
+      });
+    }
     return (
-      <div ref='app' className={getClasses(isOpen)}>
-        <h1>Resultados TLK</h1>
-        Count: {this.props.count}
-        <button onClick={this.onClickExpand} className={styles.triangle} />
+      <div {...attrs}>
+        {isOpen && <h1>TLK</h1>}
+        {!isOpen && <div className={styles.info}>TLK / studentId: {studentId}</div>}
+
+        <button onClick={this.onClickExpand} className={styles.triangle}>
+          {isOpen && <span>x</span>}
+        </button>
       </div>
     );
   }

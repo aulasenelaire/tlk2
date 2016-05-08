@@ -8,22 +8,22 @@ import TLK_OLD from 'data/tlk_old.json';
 import TLK from 'data/tlk.json';
 
 import App from './components/app/App';
-import getStudentId from './services/student-id';
+import getStudentId from 'services/student-id';
+
+const studentId = getStudentId(document.location.pathname);
+
+const anchor = document.createElement('div');
+const ANCHOR_ID = 'tlk2';
+anchor.id = ANCHOR_ID;
+document.body.insertBefore(anchor, document.body.childNodes[0]);
 
 /**
  * Renden app if there is a valid student ID
+ *
+ * @param {Maybe<Number>} studentId
  */
-function renderApp() {
-  const studentId = getStudentId(document.location.pathname);
-  if (!studentId) return;
-
+function renderApp(studentId) {
   const proxyStore = new Store({portName: CONSTANTS.CHROME_PORT});
-
-  const anchor = document.createElement('div');
-  const ANCHOR_ID = 'tlk2';
-  anchor.id = ANCHOR_ID;
-
-  document.body.insertBefore(anchor, document.body.childNodes[0]);
 
   render(
     <Provider store={proxyStore}>
@@ -36,4 +36,12 @@ function renderApp() {
   );
 }
 
-renderApp();
+renderApp(studentId);
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    window.dispatchEvent(new CustomEvent('urlChangeEvent', {
+      'detail': { studentId: request.studentId },
+    }));
+  }
+);

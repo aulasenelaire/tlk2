@@ -5,6 +5,7 @@ import filter from 'redux-localstorage-filter';
 import {wrapStore} from 'react-chrome-redux';
 
 import CONSTANTS from '../constants';
+import getStudentId from 'services/student-id';
 import rootReducer from './reducers';
 
 const reducer = compose(
@@ -23,4 +24,12 @@ const store = createPersistentStore(reducer);
 
 wrapStore(store, {
   portName: CONSTANTS.CHROME_PORT,
+});
+
+chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
+  const { url, tabId } = details;
+  const studentId = getStudentId(details.url);
+
+  // Select active tab and send studentId to content_script
+  chrome.tabs.sendMessage(tabId, { studentId }, null);
 });
