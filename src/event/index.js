@@ -2,16 +2,20 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import persistState, { mergePersistedState } from 'redux-localstorage';
 import adapter from 'redux-localstorage/lib/adapters/localStorage';
 import filter from 'redux-localstorage-filter';
-import {wrapStore} from 'react-chrome-redux';
+import {wrapStore, alias } from 'react-chrome-redux';
 
 import CONSTANTS from '../constants';
 import getStudentId from 'services/student-id';
 import requestClient from 'services/request';
 import rootReducer from './reducers';
+import aliases from './aliases';
 import promiseMiddleware from './middlewares/promise';
 
 const client = new requestClient();
-const middlewares = [promiseMiddleware(client)];
+const middlewares = [
+  alias(aliases),
+  promiseMiddleware(client),
+];
 
 const reducer = compose(
   mergePersistedState()

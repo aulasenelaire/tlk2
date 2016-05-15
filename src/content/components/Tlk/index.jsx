@@ -1,19 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { load as loadSessions } from '../../../event/reducers/sessions/';
+import { aliasLoad as aliasLoadSessions } from 'event/aliases/sessions';
 /* import styles from './styles/'; */
 
 class Tlk extends Component {
   componentWillMount() {
-    const { studentId, loadSessions } = this.props;
+    const { studentId, dispatch } = this.props;
 
-    loadSessions(studentId);
+    dispatch(aliasLoadSessions(studentId, localStorage.token));
   }
 
   render() {
+    const { loadingSessions } = this.props;
     return (
       <div>
+        {loadingSessions && <span>Loading...</span>}
         {/* <h1>TLK</h1> */}
       </div>
     );
@@ -23,7 +25,6 @@ class Tlk extends Component {
 Tlk.propTypes = {
   studentId: PropTypes.number.isRequired,
   sessions: PropTypes.array,
-  loadSessions: PropTypes.func.isRequired,
 };
 
 /**
@@ -34,20 +35,9 @@ Tlk.propTypes = {
  */
 function mapStateToProps(state) {
   return {
-    sessions: !state.sessionsReducer ? [] : state.sessionsReducer.sessions,
+    sessions: state.sessionsReducer.sessions,
+    loadingSessions: state.sessionsReducer.loadingSessions
   };
 };
 
-/**
- * Map action creators to component props
- *
- * @param {Function} dispatch
- * @return {Object} props
- */
-function mapDispatchToProps(dispatch) {
-  return {
-    loadSessions,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tlk);
+export default connect(mapStateToProps)(Tlk);

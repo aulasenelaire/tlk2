@@ -4,13 +4,10 @@ function formatUrl(path) {
   return `${CONSTANTS.BASE_API}/${path}`;
 }
 
-const { token } = localStorage;
-
 class requestClient {
   constructor() {
     ['get', 'post', 'put', 'patch', 'del'].forEach((method) =>
-      this[method] = (path, { data } = {}) => new Promise((resolve, reject) => {
-        console.log('path', path);
+      this[method] = (path, { data, token } = {}) => new Promise((resolve, reject) => {
         const req = new XMLHttpRequest();
         const url = formatUrl(path);
 

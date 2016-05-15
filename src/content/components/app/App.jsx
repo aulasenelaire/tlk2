@@ -74,7 +74,6 @@ class App extends Component {
     if (!studentId) return null;
 
     let attrs = {
-      ref: 'app',
       className: getClasses(isOpen),
       style: getStyles(isOpen),
     };

@@ -27,15 +27,19 @@ document.body.insertBefore(anchor, document.body.childNodes[0]);
 function renderApp(studentId) {
   const proxyStore = new Store({portName: CONSTANTS.CHROME_PORT});
 
-  render(
-    <Provider store={proxyStore}>
-      <App
-        studentId={studentId}
-        userToken={localStorage.token}
-      />
-    </Provider>,
-    document.getElementById(ANCHOR_ID)
-  );
+  // Wait for background store to be loaded
+  const unsubscribe = proxyStore.subscribe(() => {
+    unsubscribe(); // make sure to only fire once
+    render(
+      <Provider store={proxyStore}>
+        <App
+          studentId={studentId}
+          userToken={localStorage.token}
+        />
+      </Provider>,
+      document.getElementById(ANCHOR_ID)
+    );
+  });
 }
 
 renderApp(studentId);
