@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 export const ALIAS_REQUEST_SESSIONS = 'tlk2/actions/ALIAS_REQUEST_SESSIONS';
 const REQUEST_SESSION = 'tlk2/actions/REQUEST_SESSION';
 const REQUEST_SESSION_SUCCESS = 'tlk2/actions/REQUEST_SESSION_SUCCESS';
@@ -20,6 +22,10 @@ export default (state = initialState, action) => {
       };
 
   case REQUEST_SESSION_SUCCESS:
+    const sessions = addMetadataAndFilter(action.result.sessions);
+
+    debugger;
+
     return {
         ...state,
       loadingSessions: false,
@@ -28,6 +34,27 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+/**
+ * Filter invalid sessions and add metadata
+ *
+ * @param {Array} sessions
+ * @return {Array}
+ */
+function addMetadataAndFilter(sessions) {
+  return _.reduce(sessions, (memo, session) => {
+    const metadata = _.find(CONSTANTS.SESSION_TYPES, (type) => {
+      return type.regexp.test(session.name);
+    });
+
+    if (metadata) {
+      session.tlk_metadata = metadata;
+      memo.push(session);
+    }
+
+    return memo;
+  }, []);
+}
 
 /**
  * Load sessions from
