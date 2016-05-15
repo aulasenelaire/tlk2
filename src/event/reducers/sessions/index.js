@@ -10,7 +10,10 @@ import objectToParams from 'services/url-helpers';
 
 const initialState = {
   loadingSessions: false,
-  sessions: [],
+  sessions: {
+    entities: [],
+    byStudentId: {},
+  },
 };
 
 export default (state = initialState, action) => {
@@ -23,12 +26,23 @@ export default (state = initialState, action) => {
 
   case REQUEST_SESSION_SUCCESS:
     const sessions = addMetadataAndFilter(action.result.sessions);
+    // Remove old fetched sessions of that user
+    let newSessions = _.reject(state.sessions.entities, (session) => {
+      return parseInt(session.student) === action.requestData.studentId;
+    });
 
-    debugger;
+    newSessions = [
+      ...newSessions,
+      ...sessions,
+    ];
 
     return {
-        ...state,
+      ...state,
       loadingSessions: false,
+      sessions: {
+        entities: newSessions,
+        byStudentId: _.groupBy(newSessions, 'student')
+      },
     };
     default:
       return state;
@@ -73,7 +87,10 @@ export function load({ type, studentId, token }) {
 
   return {
     types: [REQUEST_SESSION, REQUEST_SESSION_SUCCESS, REQUEST_SESSION_FAILURE],
-    promise: (client) => client.get(`sessions?${params}`, { token })
+    promise: (client) => client.get(`sessions?${params}`, { token }),
+    requestData: {
+      studentId,
+    },
   };
 }
 

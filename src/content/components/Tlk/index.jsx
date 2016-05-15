@@ -12,10 +12,13 @@ class Tlk extends Component {
   }
 
   render() {
-    const { loadingSessions } = this.props;
+    const { loadingSessions, sessions } = this.props;
     return (
       <div>
         {loadingSessions && <span>Loading...</span>}
+        {sessions &&
+         <span>{sessions.length}</span>
+        }
         {/* <h1>TLK</h1> */}
       </div>
     );
@@ -31,11 +34,12 @@ Tlk.propTypes = {
  * Map action creators to component props
  *
  * @param {Object} state
+ * @param {Object} ownProps
  * @return {Object}
  */
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    sessions: state.sessionsReducer.sessions,
+    sessions: state.sessionsReducer.sessions.byStudentId[ownProps.studentId],
     loadingSessions: state.sessionsReducer.loadingSessions
   };
 };
