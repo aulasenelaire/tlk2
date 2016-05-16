@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import classNames from 'classnames/bind';
 import _ from 'underscore';
 
 import styles from './styles/';
+const cx = classNames.bind(styles);
+
 import Tlk from '../Tlk';
 
 /**
@@ -11,12 +14,10 @@ import Tlk from '../Tlk';
  * @return {Object}
  */
 function getClasses(isOpen) {
-  const classes = [styles.app];
-
-  if (!isOpen) return classes.join(' ');
-
-  classes.push(styles.isOpen);
-  return classes.join(' ');
+  return cx({
+    wrapper: true,
+    isOpen: isOpen,
+  });
 }
 
 /**
@@ -74,25 +75,19 @@ class App extends Component {
     if (!studentId) return null;
 
     let attrs = {
-      className: getClasses(isOpen),
-      style: getStyles(isOpen),
     };
 
-    if (!isOpen) {
-      attrs = _.extend(attrs, {
-        onClick: this.onClickExpand,
-      });
-    }
-
     return (
-      <div {...attrs}>
-        <button onClick={this.onClickExpand} className={styles.triangle}>
-          {isOpen && <span>x</span>}
-        </button>
+      <div className={getClasses(isOpen)} onClick={this.onClickExpand}>
+        <div className={styles.app} style={getStyles(isOpen)}>
+          <button onClick={this.onClickExpand} className={styles.triangle}>
+            {isOpen && <span>x</span>}
+          </button>
 
-        {!isOpen && <div className={styles.info}>studentId: {studentId}</div>}
+          {!isOpen && <div className={styles.info}>studentId: {studentId}</div>}
 
-        <Tlk studentId={studentId} />
+          {isOpen && <Tlk studentId={studentId} />}
+        </div>
       </div>
     );
   }
