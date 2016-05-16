@@ -47,6 +47,15 @@ class Tlk extends Component {
         {sessions && sessions[0] &&
          <span>Session: {sessions[0].id}</span>
         }
+        {sessions && sessions[0] && sessions[0].tlk_metadata && sessions[0].tlk_metadata.creationTime &&
+         <div>
+           Trimester:
+           {/* {sessions[0].tlk_metadata.creationTime.format('YYYY-MM-DD')} */}
+           <br/>
+           {sessions[0].tlk_metadata.trimester.name}
+           <br/>
+         </div>
+        }
          {act && act[0] &&
           <span><br />Activity: {act[0].id}</span>
          }

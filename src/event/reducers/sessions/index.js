@@ -7,6 +7,7 @@ const REQUEST_SESSION_FAILURE = 'tlk2/actions/REQUEST_SESSION_FAILURE';
 
 import CONSTANTS from 'constants';
 import objectToParams from 'services/url-helpers';
+import { getCreationTime, getTrimester } from './services/time'
 
 const initialState = {
   loadingSessions: false,
@@ -49,6 +50,8 @@ export default (state = initialState, action) => {
   }
 };
 
+
+
 /**
  * Filter invalid sessions and add metadata
  *
@@ -63,6 +66,9 @@ function addMetadataAndFilter(sessions) {
 
     if (metadata) {
       session.tlk_metadata = metadata;
+      const creationTime = getCreationTime(session.creation_time);
+      session.tlk_metadata.creationTime = creationTime;
+      session.tlk_metadata.trimester = getTrimester(creationTime);
       memo.push(session);
     }
 
