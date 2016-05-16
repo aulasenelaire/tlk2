@@ -1,5 +1,7 @@
-import loadSessions from './sessions'
+import sessions from './sessions'
+import activities from './activities'
 
 export default {
-  ...loadSessions,
+  ...sessions,
+  ...activities,
 };
