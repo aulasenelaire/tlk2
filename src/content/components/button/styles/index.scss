@@ -1,0 +1,149 @@
+@import "../../styles/variables.scss";
+
+$button_border_radius: 3px;
+$button_horizontal: 10px;
+$button_middle_line_height: 28px;
+$button_vertical: 5px;
+$border_button_width: 1px;
+$button_small_vertical: ($button_vertical - 1px);
+$button_small_horizontal: ($button_horizontal - 1px);
+$button_extra_small_vertical: ($button_vertical - 2px);
+$button_extra_small_horizontal: ($button_horizontal - 2px);
+
+/**
+ * Default
+ *
+ * Only changes font-size and line height
+ *
+ * .isDisabled - When the button is disabled
+ * :active - When the button is active
+ * :focus - When the button is active
+ * :hover - When the button is hovered
+ *
+ * Styleguide Btn - Default
+ */
+.btn {
+  background-color: none;
+  border-radius: $button_border_radius;
+  border: $border_button_width solid $new-grey-2;
+  color: $new-grey-dark;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $typeface;
+  font-size: $fs_regular;
+  line-height: $fs_regular_line_height;
+  font-weight: normal;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  padding: $button_vertical $button_horizontal;
+  white-space: nowrap;
+  touch-action: manipulation;
+  user-select: none;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, .125);
+
+  /**
+   * Sizes
+   *
+   * Only changes font-size and line height
+   *
+   * .btn_Large - Bigger size
+   * .btn_Small - Smaller
+   * .btn_ExtraSmall - Smallest
+   *
+   * Styleguide Btn - Sizes
+   */
+  &_Large {
+    font-size: $font_size_medium;
+    line-height: $font_size_medium_line_height;
+  }
+
+  &_Small {
+    font-size: $fs_small;
+    line-height: $font_size_small_line_height;
+    padding: $button_small_vertical $button_small_horizontal;
+
+    &:focus {
+      padding: ($button_small_vertical - $border_button_width) ($button_small_horizontal - $border_button_width);
+    }
+  }
+
+  &_ExtraSmall {
+    font-size: $fs_extra_small;
+    line-height: $font_size_extra_small_line_height;
+    padding: $button_extra_small_vertical $button_extra_small_horizontal;
+
+    &:focus {
+      outline: 0;
+      border-width: 2px;
+      padding: ($button_extra_small_vertical - $border_button_width) ($button_extra_small_horizontal - $border_button_width);
+    }
+  }
+
+  .isDisabled, &[disabled] {
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: .65;
+  }
+
+  &:active {
+    outline: 0;
+    box-shadow: inset 0 3px 5px rgba(0, 0 ,0 , .125);
+  }
+
+  &:focus {
+    outline: 0;
+    border-width: 2px;
+    padding: ($button_vertical - $border_button_width) ($button_horizontal - $border_button_width);
+  }
+
+  &:hover {
+    border-color: $new-grey-2;
+  }
+
+  /**
+   * Primary
+   *
+   * The main action
+   *
+   * Styleguide Btn - Primary
+   */
+  &_Primary {
+    border-color: $new-brand-main;
+    color: $new-brand-main-1;
+
+    &:hover {
+      border-color: $new-brand-main-1;
+    }
+
+    &.btn_Flat {
+      background: $new-brand-main;
+    }
+  }
+
+  /**
+   * Danger
+   *
+   * The dangerous action
+   *
+   * Styleguide Btn - Danger
+   */
+  &_Danger {
+    border-color: $new-loud-light;
+    color: $new-loud;
+
+    &:hover {
+      border-color: $new-loud;
+    }
+
+    &.btn_Flat {
+      background: $new-loud-light;
+    }
+  }
+
+  &_Flat {
+    background: $new-grey-2;
+    color: white;
+    text-shadow: 0 -1px rgba(0, 0, 0, .2);
+  }
+}

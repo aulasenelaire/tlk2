@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { aliasLoad as aliasLoadSessions } from 'event/aliases/sessions';
 import { aliasLoad as aliasLoadActivities } from 'event/aliases/activities';
+
+import CourseSelector from './CourseSelector';
 /* import styles from './styles/'; */
 
 class Tlk extends Component {
@@ -25,9 +27,25 @@ class Tlk extends Component {
     const {
       loadingSessions,
       loadingActivities,
+      sessions,
     } = this.props;
 
-    return loadingSessions || loadingActivities;
+    return !sessions || loadingSessions || loadingActivities;
+  }
+
+  /**
+   * Check if sessions have course information
+   *
+   * @return {Boolean}
+   */
+  sessionsHasCourses() {
+    const { sessions } = this.props;
+
+    if (!sessions || !sessions.length) return false;
+
+    const session = sessions[0];
+
+    return !!session.tlk_metadata.course;
   }
 
   render() {
@@ -36,30 +54,15 @@ class Tlk extends Component {
       activities,
     } = this.props;
 
-    let act;
-    if (sessions && sessions[0]) {
-      act = activities[sessions[0].id];
-    }
+    const isLoading = this.isLoading();
+    const hasCourses = this.sessionsHasCourses();
 
     return (
       <div>
-        {this.isLoading() && <span>Loading...</span>}
-        {sessions && sessions[0] &&
-         <span>Session: {sessions[0].id}</span>
+        {isLoading && <span>Loading...</span>}
+        {!isLoading && !hasCourses &&
+          <CourseSelector sessions={sessions} />
         }
-        {sessions && sessions[0] && sessions[0].tlk_metadata && sessions[0].tlk_metadata.creationTime &&
-         <div>
-           Trimester:
-           {/* {sessions[0].tlk_metadata.creationTime.format('YYYY-MM-DD')} */}
-           <br/>
-           {sessions[0].tlk_metadata.trimester.name}
-           <br/>
-         </div>
-        }
-         {act && act[0] &&
-          <span><br />Activity: {act[0].id}</span>
-         }
-        {/* <h1>TLK</h1> */}
       </div>
     );
   }

@@ -1,0 +1,45 @@
+@import "../../../styles/variables.scss";
+.error {
+  marging: 0 0 20px 0;
+  color: red;
+  text-align: center;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.item {
+  margin: 0 0 10px 0;
+  padding: 4px 8px;
+  display: flex;
+
+  &:nth-child(odd) {
+    background-color: $new-grey-light;
+  }
+}
+
+.sessionName {
+  flex: 1 0 auto;
+
+  small {
+    display: block;
+  }
+}
+
+
+.courseSelector {
+  display: flex;
+  align-items: center;
+  small {
+    margin-right: 10px;
+  }
+}
+
+.allInOneCourseSelector {
+  border-bottom: 1px solid $new-grey-light-2;
+  padding: 0 0 10px 0;
+  margin-bottom: 10px;
+  text-align: right;
+}

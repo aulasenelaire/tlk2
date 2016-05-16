@@ -12,7 +12,7 @@ function getCSSLoader(env) {
         '[name]__[local]___[hash:base64:5]' : '[hash:base64:5]';
 
   var styleLoader = 'style';
-  var otherLoaders = 'css?modules&importLoaders=1&localIdentName=' + cssLocalIdentName + '!postcss';
+  var otherLoaders = 'css?modules&importLoaders=1&localIdentName=' + cssLocalIdentName + '!sass!postcss';
 
   return styleLoader + '!' + otherLoaders;
 }
@@ -50,7 +50,7 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         loader: getCSSLoader('development')
       },
       { test: /\.json$/, loader: 'json' },

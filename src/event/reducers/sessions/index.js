@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
 
   case REQUEST_SESSION_SUCCESS:
     const sessions = addMetadataAndFilter(action.result.sessions);
+
     // Remove old fetched sessions of that user
     let newSessions = _.reject(state.sessions.entities, (session) => {
       return parseInt(session.student) === action.requestData.studentId;
@@ -36,6 +37,10 @@ export default (state = initialState, action) => {
       ...newSessions,
       ...sessions,
     ];
+
+    newSessions = _.sortBy(newSessions, function(session) {
+      return session.tlk_metadata.creationTime.unix();
+    });
 
     return {
       ...state,

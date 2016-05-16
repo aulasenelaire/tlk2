@@ -1,0 +1,80 @@
+/**
+ * Colors
+ *
+ * Colors used in redbooth
+ *
+ * These names are based on http://chir.ag/projects/name-that-color
+ * Styleguide Colors
+ */
+
+$color-mandy: #e45555;
+$color-eastern-blue: #21a5b8;
+$color-java: #1bcfb4;
+$color-curious-blue: #1b89cf;
+
+$new-brand-main: $color-eastern-blue;
+$new-brand-main-1: #1f8b9b;
+$new-brand-main-2: #15606c;
+$new-brand-main-3: #0b363c;
+$new-brand-secondary: #83a1a6;
+$new-brand-secondary-1: #516366;
+$new-brand-secondary-2: #06262a;
+$new-brand-secondary-3: #2b4d52;
+
+$new-grey-light: #f6f6f6;
+$new-grey-light-1: #eeeeee;
+$new-grey-light-2: #ebebeb;
+$new-grey-light-3: #dddddd;
+$new-grey: #cccccc;
+$new-grey-1: #bbbbbb;
+$new-grey-2: #999999;
+$new-grey-dark: #666666;
+$new-grey-dark-1: #444444;
+$new-grey-dark-2: #333333;
+
+$new-quiet: #e1f4f7;
+$new-quiet-1: #c1e6eb;
+$new-quiet-2: #fff3f5;
+$new-quiet-3: #fee0e3;
+$new-quiet-4: #fffcea;
+
+$new-positive-loud: #7ed321;
+$new-positive-light: #EFFDDF;
+$new-positive-quiet: #8dce83;
+$new-important: #e8a95c;
+$new-loud-ultralight: #F9D4D4;
+$new-loud-light: $color-mandy;
+$new-loud: #cb4a4a;
+$new-loud-dark: #9f434e;
+$new-starred: #e9aa55;
+$new-tango: #ff9418;
+$new-oasis: #ffe9d1;
+
+$typeface: Arial, sans-serif;
+
+/* line-height: 13 px / 18px */
+$fs_regular: 13px;
+$fs_regular_line_height: 1.384615385;
+
+$fs_regular_small: 12px;
+$fs_regular_small_line_height: 1.65em;
+
+/* line height: 14px / 9px */
+$fs_extra_small: 9px;
+$font_size_extra_small_line_height: 1.555555556;
+
+/* line height: 16px / 11px */
+$fs_small: 11px;
+$font_size_small_line_height: 1.454545455;
+
+/* line height: 22px / 16px */
+$font_size_medium: 16px;
+$font_size_medium_line_height: 1.375;
+
+/* big line height: 28px / 20px = 1.4em */
+$font_size_big: 20px;
+$font_size_big_line_height: 1.4em;
+
+/* big line height: 28px / 20px = 1.4em */
+$font_size_huge: 28px;
+$font_size_huge_line_height: 1.2em;
