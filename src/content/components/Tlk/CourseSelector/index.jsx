@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'underscore';
 import moment from 'moment';
 
 import CONSTANTS from 'constants';
@@ -6,6 +7,17 @@ import Button from '../../button';
 import styles from './styles/';
 
 const NO_COURSE = 'no_course';
+
+function getValue(event) {
+  const { value } = event.target;
+  return value;
+}
+
+function getSelectedValue(selectedCourseBySessionId, generalSelector) {
+  if (!selectedCourseBySessionId) return generalSelector;
+
+  return selectedCourseBySessionId;
+}
 
 class CourseSelector extends Component {
   constructor() {
@@ -20,15 +32,44 @@ class CourseSelector extends Component {
   }
 
   onChangeGeneralSelector(event) {
-    this.setState({generalSelector: event.target.value});
+    const value = getValue(event);
+    const { selectedCourses } = this.state;
+    const { sessions } = this.props;
+    const selectedCoursesIds = _.keys(selectedCourses);
+    const ids = _.reject(_.pluck(sessions, 'id'), (id) => {
+      return _.contains(selectedCoursesIds, id);
+    });
+
+    let newSelected = {};
+    if (value !== NO_COURSE) {
+      newSelected = _.reduce(ids, (acc, id) => {
+        acc[id] = value;
+        return acc;
+      }, {});
+    }
+
+    const newSelectedCourses = {
+      ...selectedCourses,
+      ...newSelected,
+    };
+
+    this.setState({generalSelector: value});
+    this.setState({selectedCourses: newSelectedCourses});
   }
 
   onChangeSessionCourse(sessionId, event) {
     const { selectedCourses } = this.state;
-    const newSelectedCourses = {
+    const value = getValue(event);
+
+    let newSelectedCourses = {
       ...selectedCourses,
-      [sessionId]: event.target.value,
+      [sessionId]: value,
     };
+
+    if (value === NO_COURSE) {
+      newSelectedCourses = _.omit(newSelectedCourses, sessionId);
+    }
+
     this.setState({selectedCourses: newSelectedCourses});
   }
 
@@ -43,7 +84,7 @@ class CourseSelector extends Component {
 
     const sessionRows = sessions.map((session) => {
       const creationTime = moment(session.tlk_metadata.creationTime).format('DD-MM-YYYY');
-      const selectedValue = selectedCourses[session.id] ? selectedCourses[session.id] : generalSelector;
+      const selectedValue = selectedCourses[session.id];
 
       return (
         <li key={session.id} className={styles.item}>
