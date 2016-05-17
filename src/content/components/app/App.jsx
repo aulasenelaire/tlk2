@@ -75,10 +75,20 @@ class App extends Component {
     if (!studentId) return null;
 
     let attrs = {
+      className: getClasses(isOpen),
     };
 
+    if (!isOpen) {
+      attrs = {
+        ...attrs,
+        onClick: this.onClickExpand,
+      };
+    };
+
+    /* TODO: make backdrop layer  */
+    {/* <div className={getClasses(isOpen)} onClick={this.onClickExpand}> */}
     return (
-      <div className={getClasses(isOpen)} onClick={this.onClickExpand}>
+      <div {...attrs}>
         <div className={styles.app} style={getStyles(isOpen)}>
           <button onClick={this.onClickExpand} className={styles.triangle}>
             {isOpen && <span>x</span>}

@@ -12,7 +12,24 @@ class CourseSelector extends Component {
     super();
     this.state = {
       error: null,
+      selectedCourses: {},
+      generalSelector: null,
     };
+
+    this.onChangeGeneralSelector = this.onChangeGeneralSelector.bind(this);
+  }
+
+  onChangeGeneralSelector(event) {
+    this.setState({generalSelector: event.target.value});
+  }
+
+  onChangeSessionCourse(sessionId, event) {
+    const { selectedCourses } = this.state;
+    const newSelectedCourses = {
+      ...selectedCourses,
+      [sessionId]: event.target.value,
+    };
+    this.setState({selectedCourses: newSelectedCourses});
   }
 
   render() {
@@ -20,12 +37,13 @@ class CourseSelector extends Component {
       sessions,
       courses,
     } = this.props;
-    const { error } = this.state;
+    const { error, generalSelector, selectedCourses } = this.state;
     const { COURSES_NAMES } = CONSTANTS;
 
 
     const sessionRows = sessions.map((session) => {
       const creationTime = moment(session.tlk_metadata.creationTime).format('DD-MM-YYYY');
+      const selectedValue = selectedCourses[session.id] ? selectedCourses[session.id] : generalSelector;
 
       return (
         <li key={session.id} className={styles.item}>
@@ -35,7 +53,7 @@ class CourseSelector extends Component {
           </div>
           <div className={styles.courseSelector}>
             <small>{creationTime}</small>
-            <select>
+            <select onChange={this.onChangeSessionCourse.bind(this, session.id)} value={selectedValue}>
               <option value={NO_COURSE}>Elige curso</option>
               {COURSES_NAMES.map((course) => {
                 return (
@@ -57,7 +75,7 @@ class CourseSelector extends Component {
         }
 
         <div className={styles.allInOneCourseSelector}>
-          <select>
+          <select onChange={this.onChangeGeneralSelector} value={generalSelector}>
             <option value={NO_COURSE}>Todas las sessiones el mismo curso. Elige</option>
             {COURSES_NAMES.map((course) => {
               return (
