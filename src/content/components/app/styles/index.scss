@@ -40,13 +40,21 @@ $app_margin: 4px;
   }
 
   &.isOpen {
-    background-color: rgba(0, 0, 0, 0.3);
+    .backdrop {
+      background-color: rgba(0, 0, 0, 0.3);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
 
     .app {
       background-color: rgba(255, 255, 255, 0.9);
       padding-top: 20px;
       padding-bottom: 20px;
       cursor: default;
+      z-index: 10;
     }
   }
 
