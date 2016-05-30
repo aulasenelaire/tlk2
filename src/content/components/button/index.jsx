@@ -26,12 +26,13 @@ class Button extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, onClick } = this.props;
 
     return (
       <button
         className={this.getClasses()}
         type='button'
+        onClick={onClick}
       >
         {children}
       </button>
@@ -45,6 +46,7 @@ Button.propTypes = {
   buttonType: PropTypes.string,
   disabled: PropTypes.bool,
   flat: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Button;

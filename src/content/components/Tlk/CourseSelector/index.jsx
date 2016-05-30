@@ -73,6 +73,10 @@ class CourseSelector extends Component {
     this.setState({selectedCourses: newSelectedCourses});
   }
 
+  onClickAssign() {
+    console.log('Click!');
+  }
+
   render() {
     const {
       sessions,
@@ -130,7 +134,13 @@ class CourseSelector extends Component {
           {sessionRows}
         </ul>
 
-        <Button flat={true} buttonType='primary'>Asignar curso</Button>
+        <Button
+          flat={true}
+          buttonType='primary'
+          onClick={this.onClickAssign}
+        >
+          Asignar curso
+        </Button>
       </div>
     );
   }
