@@ -4,6 +4,8 @@ export const ALIAS_REQUEST_SESSIONS = 'tlk2/actions/ALIAS_REQUEST_SESSIONS';
 const REQUEST_SESSION = 'tlk2/actions/REQUEST_SESSION';
 const REQUEST_SESSION_SUCCESS = 'tlk2/actions/REQUEST_SESSION_SUCCESS';
 const REQUEST_SESSION_FAILURE = 'tlk2/actions/REQUEST_SESSION_FAILURE';
+const ALIAS_ADD_COURSE = 'tlk2/actions/ALIAS_ADD_COURSE';
+const ADD_COURSE = 'tlk2/actions/ADD_COURSE';
 
 import CONSTANTS from 'constants';
 import objectToParams from 'services/url-helpers';
@@ -25,37 +27,39 @@ export default (state = initialState, action) => {
         loadingSessions: true,
       };
 
-  case REQUEST_SESSION_SUCCESS:
-    const sessions = addMetadataAndFilter(action.result.sessions);
+    case REQUEST_SESSION_SUCCESS:
+      const sessions = addMetadataAndFilter(action.result.sessions);
 
-    // Remove old fetched sessions of that user
-    let newSessions = _.reject(state.sessions.entities, (session) => {
-      return parseInt(session.student) === action.requestData.studentId;
-    });
+      // Remove old fetched sessions of that user
+      let newSessions = _.reject(state.sessions.entities, (session) => {
+        return parseInt(session.student) === action.requestData.studentId;
+      });
 
-    newSessions = [
-      ...newSessions,
-      ...sessions,
-    ];
+      newSessions = [
+        ...newSessions,
+        ...sessions,
+      ];
 
-    newSessions = _.sortBy(newSessions, function(session) {
-      return session.tlk_metadata.creationTime.unix();
-    });
+      newSessions = _.sortBy(newSessions, function(session) {
+        return session.tlk_metadata.creationTime.unix();
+      });
 
-    return {
-      ...state,
-      loadingSessions: false,
-      sessions: {
-        entities: newSessions,
-        byStudentId: _.groupBy(newSessions, 'student')
-      },
-    };
+      return {
+        ...state,
+        loadingSessions: false,
+        sessions: {
+          entities: newSessions,
+          byStudentId: _.groupBy(newSessions, 'student')
+        },
+      };
+
+    case ADD_COURSE:
+      return state;
+
     default:
       return state;
   }
 };
-
-
 
 /**
  * Filter invalid sessions and add metadata
@@ -105,3 +109,14 @@ export function load({ type, studentId, token }) {
   };
 }
 
+/**
+ * Complete session with course information
+ *
+ * @param {Object} courses
+ */
+export function addCourse(courses) {
+  return {
+    type: ADD_COURSE,
+    courses: courses,
+  };
+}

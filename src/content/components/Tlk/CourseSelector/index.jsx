@@ -53,8 +53,11 @@ class CourseSelector extends Component {
       ...newSelected,
     };
 
-    this.setState({generalSelector: value});
-    this.setState({selectedCourses: newSelectedCourses});
+    this.setState({
+      generalSelector: value,
+      selectedCourses: newSelectedCourses,
+      error: null,
+    });
   }
 
   onChangeSessionCourse(sessionId, event) {
@@ -70,11 +73,21 @@ class CourseSelector extends Component {
       newSelectedCourses = _.omit(newSelectedCourses, sessionId);
     }
 
-    this.setState({selectedCourses: newSelectedCourses});
+    this.setState({
+      selectedCourses: newSelectedCourses,
+      error: null,
+    });
   }
 
   onClickAssign() {
-    console.log('Click!');
+    const { sessions, addCourses } = this.props;
+    const { selectedCourses } = this.state;
+
+    if (_.keys(selectedCourses).length < sessions.length) {
+      this.setState({ error: 'Todas las sessiones deben de tener curso'});
+    } else {
+      addCourses(selectedCourses);
+    }
   }
 
   render() {
@@ -98,7 +111,10 @@ class CourseSelector extends Component {
           </div>
           <div className={styles.courseSelector}>
             <small>{creationTime}</small>
-            <select onChange={this.onChangeSessionCourse.bind(this, session.id)} value={selectedValue}>
+            <select
+              onChange={this.onChangeSessionCourse.bind(this, session.id)}
+              value={selectedValue}
+            >
               <option value={NO_COURSE}>Elige curso</option>
               {COURSES_NAMES.map((course) => {
                 return (
@@ -121,7 +137,7 @@ class CourseSelector extends Component {
 
         <div className={styles.allInOneCourseSelector}>
           <select onChange={this.onChangeGeneralSelector} value={generalSelector}>
-            <option value={NO_COURSE}>Todas las sessiones el mismo curso. Elige</option>
+            <option value={NO_COURSE}>Elige curso</option>
             {COURSES_NAMES.map((course) => {
               return (
                 <option key={course} value={course}>{course}</option>
@@ -137,7 +153,7 @@ class CourseSelector extends Component {
         <Button
           flat={true}
           buttonType='primary'
-          onClick={this.onClickAssign}
+          onClick={this.onClickAssign.bind(this)}
         >
           Asignar curso
         </Button>
@@ -148,6 +164,7 @@ class CourseSelector extends Component {
 
 CourseSelector.propTypes = {
   sessions: PropTypes.array.isRequired,
+  addCourses: PropTypes.func.isRequired,
 };
 
 export default CourseSelector;

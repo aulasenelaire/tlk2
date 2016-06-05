@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { aliasLoad as aliasLoadSessions } from 'event/aliases/sessions';
+import { aliasLoad as aliasLoadSessions, aliasAddCourse } from 'event/aliases/sessions';
 import { aliasLoad as aliasLoadActivities } from 'event/aliases/activities';
 
 import CourseSelector from './CourseSelector';
@@ -33,6 +33,12 @@ class Tlk extends Component {
     return !sessions || loadingSessions || loadingActivities;
   }
 
+  addCourses(courses) {
+    const { dispatch } = this.props;
+
+    dispatch(aliasAddCourse(courses));
+  }
+
   /**
    * Check if sessions have course information
    *
@@ -61,7 +67,7 @@ class Tlk extends Component {
       <div>
         {isLoading && <span>Loading...</span>}
         {!isLoading && !hasCourses &&
-          <CourseSelector sessions={sessions} />
+          <CourseSelector sessions={sessions} addCourses={this.addCourses.bind(this)} />
         }
       </div>
     );
