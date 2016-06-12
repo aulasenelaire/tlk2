@@ -24,12 +24,16 @@ export function aliasLoad(studentId, token) {
  * Add course info
  *
  * @param {Object} courses
+ * @param {Number} studentId
+ * @param {Array} activities
  * @return {Object}
  */
-export function aliasAddCourse(courses) {
+export function aliasAddCourse(courses, studentId, activities) {
   return {
     type: ALIAS_ADD_COURSE,
-    courses: courses,
+    courses,
+    studentId,
+    activities,
   };
 }
 

@@ -5,6 +5,7 @@ import { aliasLoad as aliasLoadSessions, aliasAddCourse } from 'event/aliases/se
 import { aliasLoad as aliasLoadActivities } from 'event/aliases/activities';
 
 import CourseSelector from './CourseSelector';
+import Percentils from './Percentils';
 /* import styles from './styles/'; */
 
 class Tlk extends Component {
@@ -34,9 +35,9 @@ class Tlk extends Component {
   }
 
   addCourses(courses) {
-    const { dispatch } = this.props;
+    const { dispatch, studentId, activities } = this.props;
 
-    dispatch(aliasAddCourse(courses));
+    dispatch(aliasAddCourse(courses, studentId, activities));
   }
 
   /**
@@ -54,6 +55,30 @@ class Tlk extends Component {
     return !!session.tlk_metadata.course;
   }
 
+  /**
+   * Render sessions. If no course render CourseSelector
+   * else percentils results of the session
+   *
+   * @param {Boolean} isLoading
+   * @param {Boolean} isLoading
+   */
+  renderSession(isLoading) {
+    if (isLoading) return null;
+
+    const hasCourses = this.sessionsHasCourses();
+    const { sessions } = this.props;
+
+    if (!hasCourses) {
+      return (
+        <CourseSelector sessions={sessions} addCourses={this.addCourses.bind(this)} />
+      );
+    }
+
+    return (
+      <Percentils sessions={sessions} />
+    );
+  }
+
   render() {
     const {
       sessions,
@@ -61,14 +86,12 @@ class Tlk extends Component {
     } = this.props;
 
     const isLoading = this.isLoading();
-    const hasCourses = this.sessionsHasCourses();
 
     return (
       <div>
         {isLoading && <span>Loading...</span>}
-        {!isLoading && !hasCourses &&
-          <CourseSelector sessions={sessions} addCourses={this.addCourses.bind(this)} />
-        }
+
+        {this.renderSession(isLoading)}
       </div>
     );
   }

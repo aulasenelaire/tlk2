@@ -7,6 +7,9 @@ HERE: http://stackoverflow.com/a/35801759/2804779
 - [x] Do course selector
 - [x] Manage not courses selected ERROR
 - [x] Implement Backdrop in app
-- [] Calculate percentils once we have courses
-- [] Display sessions and activities into panel
+- [x] Calculate percentils once we have courses
+- [] Style percentils page with header. Paddings
+- [] Fix bugs:
+     1. http://app.binding-edu.org/dashboard/student/7104/summary/session (Not calculating TLK 2)
+     2. http://app.binding-edu.org/dashboard/student/15441/summary/session?group=1084 (August date breaking trimesters function)
 - [] Persist fetched data in localStorage move to redux/localStorage

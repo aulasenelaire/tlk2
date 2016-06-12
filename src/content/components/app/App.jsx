@@ -89,7 +89,16 @@ class App extends Component {
 
           {!isOpen && <div className={styles.info}>studentId: {studentId}</div>}
 
-          {isOpen && <Tlk studentId={studentId} />}
+          {isOpen &&
+            <div className={styles.app__Header}>
+            </div>
+          }
+
+          {isOpen &&
+            <div className={styles.app__Content}>
+              <Tlk studentId={studentId} />
+            </div>
+          }
         </div>
       </div>
     );

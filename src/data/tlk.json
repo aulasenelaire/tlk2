@@ -2,7 +2,7 @@
   {
     "course":"1P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"11,9",
     "p10":"14,8",
@@ -28,7 +28,7 @@
   {
     "course":"1P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"7",
     "p10":"8,4",
@@ -54,7 +54,7 @@
   {
     "course":"1P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"21,6",
     "p10":"27,4",
@@ -80,7 +80,7 @@
   {
     "course":"1P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"13,9",
     "p10":"16,2",
@@ -106,7 +106,7 @@
   {
     "course":"1P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"31,6",
     "p10":"37,8",
@@ -132,7 +132,7 @@
   {
     "course":"1P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"16",
     "p10":"19,5",
@@ -158,7 +158,7 @@
   {
     "course":"2P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"25,7",
     "p10":"37,5",
@@ -184,7 +184,7 @@
   {
     "course":"2P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"15",
     "p10":"20",
@@ -210,7 +210,7 @@
   {
     "course":"2P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"25,7",
     "p10":"37,5",
@@ -236,7 +236,7 @@
   {
     "course":"2P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"15",
     "p10":"20",
@@ -262,7 +262,7 @@
   {
     "course":"2P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"34,2",
     "p10":"47",
@@ -288,7 +288,7 @@
   {
     "course":"2P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"22,6",
     "p10":"24,6",
@@ -314,7 +314,7 @@
   {
     "course":"3P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"49,9",
     "p10":"53,7",
@@ -340,7 +340,7 @@
   {
     "course":"3P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"26,4",
     "p10":"30,2",
@@ -366,7 +366,7 @@
   {
     "course":"3P",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"19,4",
     "p10":"21,2",
@@ -392,7 +392,7 @@
   {
     "course":"3P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"49,9",
     "p10":"53,7",
@@ -418,7 +418,7 @@
   {
     "course":"3P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"26,4",
     "p10":"30,2",
@@ -444,7 +444,7 @@
   {
     "course":"3P",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"19,4",
     "p10":"21,2",
@@ -470,7 +470,7 @@
   {
     "course":"3P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"45,2",
     "p10":"55,3",
@@ -496,7 +496,7 @@
   {
     "course":"3P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"31,1",
     "p10":"33,2",
@@ -522,7 +522,7 @@
   {
     "course":"3P",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"21,5",
     "p10":"24,4",
@@ -548,7 +548,7 @@
   {
     "course":"4P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"62,1",
     "p10":"62,8",
@@ -574,7 +574,7 @@
   {
     "course":"4P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"35,6",
     "p10":"37,6",
@@ -600,7 +600,7 @@
   {
     "course":"4P",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"25,2",
     "p10":"27,2",
@@ -626,7 +626,7 @@
   {
     "course":"4P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"62,1",
     "p10":"62,8",
@@ -652,7 +652,7 @@
   {
     "course":"4P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"35,6",
     "p10":"37,6",
@@ -678,7 +678,7 @@
   {
     "course":"4P",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"25,2",
     "p10":"27,2",
@@ -704,7 +704,7 @@
   {
     "course":"4P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"51,2",
     "p10":"56,1",
@@ -730,7 +730,7 @@
   {
     "course":"4P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"32,7",
     "p10":"37,1",
@@ -756,7 +756,7 @@
   {
     "course":"4P",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"26",
     "p10":"27,6",
@@ -782,7 +782,7 @@
   {
     "course":"5P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"66,9",
     "p10":"69,6",
@@ -808,7 +808,7 @@
   {
     "course":"5P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"39,4",
     "p10":"43,6",
@@ -834,7 +834,7 @@
   {
     "course":"5P",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"27,4",
     "p10":"30,1",
@@ -860,7 +860,7 @@
   {
     "course":"5P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"66,9",
     "p10":"69,6",
@@ -886,7 +886,7 @@
   {
     "course":"5P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"39,4",
     "p10":"43,6",
@@ -912,7 +912,7 @@
   {
     "course":"5P",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"27,4",
     "p10":"30,1",
@@ -938,7 +938,7 @@
   {
     "course":"5P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"60,1",
     "p10":"64,4",
@@ -964,7 +964,7 @@
   {
     "course":"5P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"42",
     "p10":"45,1",
@@ -990,7 +990,7 @@
   {
     "course":"5P",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"27,7",
     "p10":"31,3",
@@ -1016,7 +1016,7 @@
   {
     "course":"6P",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"68,7",
     "p10":"80,2",
@@ -1042,7 +1042,7 @@
   {
     "course":"6P",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"43,7",
     "p10":"46,7",
@@ -1068,7 +1068,7 @@
   {
     "course":"6P",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"28,8",
     "p10":"32,4",
@@ -1094,7 +1094,7 @@
   {
     "course":"6P",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"68,7",
     "p10":"80,2",
@@ -1120,7 +1120,7 @@
   {
     "course":"6P",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"43,7",
     "p10":"46,7",
@@ -1146,7 +1146,7 @@
   {
     "course":"6P",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"28,8",
     "p10":"32,4",
@@ -1172,7 +1172,7 @@
   {
     "course":"6P",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"64,4",
     "p10":"69,6",
@@ -1198,7 +1198,7 @@
   {
     "course":"6P",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"41,5",
     "p10":"46,3",
@@ -1224,7 +1224,7 @@
   {
     "course":"6P",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"29,9",
     "p10":"33,6",
@@ -1250,7 +1250,7 @@
   {
     "course":"1ESO",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"70,18",
     "p10":"77,03",
@@ -1276,7 +1276,7 @@
   {
     "course":"1ESO",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"44,37",
     "p10":"49,41",
@@ -1302,7 +1302,7 @@
   {
     "course":"1ESO",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"30,58",
     "p10":"34,34",
@@ -1328,7 +1328,7 @@
   {
     "course":"1ESO",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"70,18",
     "p10":"77,03",
@@ -1354,7 +1354,7 @@
   {
     "course":"1ESO",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"44,37",
     "p10":"49,41",
@@ -1380,7 +1380,7 @@
   {
     "course":"1ESO",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"30,58",
     "p10":"34,34",
@@ -1406,7 +1406,7 @@
   {
     "course":"1ESO",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"70,18",
     "p10":"77,03",
@@ -1432,7 +1432,7 @@
   {
     "course":"1ESO",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"44,37",
     "p10":"49,41",
@@ -1458,7 +1458,7 @@
   {
     "course":"1ESO",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"30,58",
     "p10":"34,34",
@@ -1484,7 +1484,7 @@
   {
     "course":"2ESO",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"72,5",
     "p10":"85,76",
@@ -1510,7 +1510,7 @@
   {
     "course":"2ESO",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"47,55",
     "p10":"53,62",
@@ -1536,7 +1536,7 @@
   {
     "course":"2ESO",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,24",
     "p10":"38,64",
@@ -1562,7 +1562,7 @@
   {
     "course":"2ESO",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"72,5",
     "p10":"85,76",
@@ -1588,7 +1588,7 @@
   {
     "course":"2ESO",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"47,55",
     "p10":"53,62",
@@ -1614,7 +1614,7 @@
   {
     "course":"2ESO",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,24",
     "p10":"38,64",
@@ -1640,7 +1640,7 @@
   {
     "course":"2ESO",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"72,5",
     "p10":"85,76",
@@ -1666,7 +1666,7 @@
   {
     "course":"2ESO",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"47,55",
     "p10":"53,62",
@@ -1692,7 +1692,7 @@
   {
     "course":"2ESO",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,24",
     "p10":"38,64",
@@ -1718,7 +1718,7 @@
   {
     "course":"3ESO",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"73,16",
     "p10":"87",
@@ -1744,7 +1744,7 @@
   {
     "course":"3ESO",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"46,28",
     "p10":"56,52",
@@ -1770,7 +1770,7 @@
   {
     "course":"3ESO",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"36,5",
     "p10":"39,68",
@@ -1796,7 +1796,7 @@
   {
     "course":"3ESO",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"73,16",
     "p10":"87",
@@ -1822,7 +1822,7 @@
   {
     "course":"3ESO",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"46,28",
     "p10":"56,52",
@@ -1848,7 +1848,7 @@
   {
     "course":"3ESO",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"36,5",
     "p10":"39,68",
@@ -1874,7 +1874,7 @@
   {
     "course":"3ESO",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"73,16",
     "p10":"87",
@@ -1900,7 +1900,7 @@
   {
     "course":"3ESO",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"46,28",
     "p10":"56,52",
@@ -1926,7 +1926,7 @@
   {
     "course":"3ESO",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"36,5",
     "p10":"39,68",
@@ -1952,7 +1952,7 @@
   {
     "course":"4ESO",
     "trimester":"1tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"91,58",
     "p10":"96,67",
@@ -1978,7 +1978,7 @@
   {
     "course":"4ESO",
     "trimester":"1tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"51,64",
     "p10":"58,6",
@@ -2004,7 +2004,7 @@
   {
     "course":"4ESO",
     "trimester":"1tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,95",
     "p10":"38,88",
@@ -2030,7 +2030,7 @@
   {
     "course":"4ESO",
     "trimester":"2tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"91,58",
     "p10":"96,67",
@@ -2056,7 +2056,7 @@
   {
     "course":"4ESO",
     "trimester":"2tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"51,64",
     "p10":"58,6",
@@ -2082,7 +2082,7 @@
   {
     "course":"4ESO",
     "trimester":"2tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,95",
     "p10":"38,88",
@@ -2108,7 +2108,7 @@
   {
     "course":"4ESO",
     "trimester":"3tr",
-    "length":"mono",
+    "type":"mono",
     "p0":"0",
     "p5":"91,58",
     "p10":"96,67",
@@ -2134,7 +2134,7 @@
   {
     "course":"4ESO",
     "trimester":"3tr",
-    "length":"bi",
+    "type":"bi",
     "p0":"0",
     "p5":"51,64",
     "p10":"58,6",
@@ -2160,7 +2160,7 @@
   {
     "course":"4ESO",
     "trimester":"3tr",
-    "length":"tri",
+    "type":"tri",
     "p0":"0",
     "p5":"37,95",
     "p10":"38,88",

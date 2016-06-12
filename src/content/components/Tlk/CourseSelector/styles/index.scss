@@ -1,6 +1,8 @@
 @import "../../../styles/variables.scss";
 .error {
-  marging: 0 0 20px 0;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  border: 1px solid red;
   color: red;
   text-align: center;
 }
